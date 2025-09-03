@@ -6,6 +6,7 @@ read -p "Drive# " drive
 read -p "Multi? " multi
 read -p "2Side? " sides
 
+dpath="/dev/sr$drive"
 final="$barid [$dbase-$dbid"
 
 if [[ "${multi,,}" =~ ^(yes|y)$ ]]; then
@@ -18,17 +19,22 @@ if [[ "${sides,,}" =~ ^(yes|y)$ ]]; then
 fi
 
 final+="]"
-dvdbackup -Mpi /dev/sr$drive -n $barid -ra
+dvdbackup -Mpi $dpath -n $barid -ra
 exstat=$?
 
 if [ $exstat -ne 0 ]; then
-    rm -r $barid
-    safecopy --stage1 /dev/sr0 "$final.iso"
-    safecopy --stage2 /dev/sr0 "$final.iso"
-    safecopy --stage3 /dev/sr0 "$final.iso"
-    rm stage*.badblocks
-else
-    mv $barid "$final"
+    stage=1
+    
+    while [$scstat -ne 0 -a $stage <= 3] :; do
+        rm -r $barid
+        safecopy --stage$stage $dpath "$barid"
+        scstat=$?
+        let "stage++"
+    done
+
+    final+=".iso"
+    rm "stage*.badblocks"
 fi
 
-eject /dev/sr$drive
+mv "$barid" "$final"
+eject $dpath
