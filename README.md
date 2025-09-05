@@ -8,4 +8,4 @@ to backup and recover as much data from a dvd as possible
 ## Linux
 > Download script, make it executable, then run.
 ## Windows
-> Install linux, continue from [here](https://github.com/Reminair/bashrip/edit/main/README.md#linux)
+> Install linux, continue from [here](https://github.com/Reminair/bashrip?tab=readme-ov-file#linux)
