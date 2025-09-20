@@ -1,7 +1,7 @@
 # TODO:
 #   add iso extraction via mounting & copying or 7zip; then just delete the iso (prob a better way to do tho?)
 #   somehow get ddrescue to abort after a certain percentage successfully ripped
-#   improve the logic at 35-40 as it feels a little messy/unoptimised
+#   improve the ddrescue logic as it feels a little messy/unoptimised
 
 input="$1"
 output="$2"
@@ -27,4 +27,5 @@ else
     mv $tmpdir/disc "$output"
 fi
 
-eject $dpath    # Eject disc and terminate program
+rmdir $tmpdir    # Remove temporary directory
+eject $dpath     # Eject disc and terminate program
