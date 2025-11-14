@@ -36,7 +36,7 @@ flagList=(                         # ddrescue flags per stage
 dvdbackup -Mpi $input -o $tmpdir -n disc -ra    # Attempts to backup entire disc, aborts on error
 exstat=$?                                       # Records exit code
 
-if [[ "$exstat" -ne '0'kk ]]; then                         # Starts ddrescue if aborted
+if [[ "$exstat" -ne '0' ]]; then                         # Starts ddrescue if aborted
     rm -r $tmpdir/disc
     for flags in "${flagList[@]}"; do                      # Loops ddrescue 3 times with flaglist
         ddrescue -b 2048 $flags $in $out.iso $out.log
